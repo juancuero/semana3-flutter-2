@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:semana3noticias/Providers/articulo.provider.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -8,6 +9,9 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+
+  final ArticuloProvider articuloProvider = ArticuloProvider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,6 +23,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   _body() {
+    articuloProvider.getArticulos();
     return Text("cuerpo de la aplicación");
   }
 }
