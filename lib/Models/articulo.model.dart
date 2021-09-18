@@ -1,6 +1,6 @@
 class Articulo{
 
-  String source;
+  Source source;
   String author;
   String title;
   String description;
@@ -22,7 +22,7 @@ class Articulo{
 
 
   factory Articulo.fromJson(Map<String, dynamic> json) => Articulo(
-    source: json["source"]["name"] ?? '',
+    source: Source.fromJson(json["source"]),
     author : json["author"] ?? 'no tiene autor',
     title : json["title"] ?? '',
     description : json["description"] ?? '',
