@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:semana3noticias/Models/articulo.model.dart';
 import 'package:semana3noticias/Providers/articulo.provider.dart';
+import 'package:semana3noticias/Widgets/card.widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -10,7 +11,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   final ArticuloProvider articuloProvider = ArticuloProvider();
   Future<List<Articulo>>? listaArticulos;
   int temporal = 1;
@@ -28,37 +28,27 @@ class _HomePageState extends State<HomePage> {
         title: Text("Home"),
       ),
       body: _body(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-            setState(() {
-              temporal++;
-               listaArticulos = articuloProvider.getArticulos(page: temporal);
-            });
-        },
-        child: Icon(Icons.new_label),
-      )
     );
   }
 
   _body() {
     return FutureBuilder(
-      future: listaArticulos,
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if(snapshot.hasData){
+        future: listaArticulos,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasData) {
+            List<CardWidget> lista = [];
 
-          List<Text> lista = [];
-
-          snapshot.data.forEach( (item)=>{
-            lista.add(Text(item.source.name))
-          });
-          return ListView(
-            children: lista,
-          );
-        }else{
-
-          return Center(child: CircularProgressIndicator());
-        }
-      }
-    );
+            snapshot.data.forEach((item) => {
+                  lista.add(CardWidget(
+                    articulo: item,
+                  ))
+                });
+            return ListView(
+              children: lista,
+            );
+          } else {
+            return Center(child: CircularProgressIndicator());
+          }
+        });
   }
 }
